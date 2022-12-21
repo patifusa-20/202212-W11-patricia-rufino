@@ -1,6 +1,25 @@
-export function Login() {
+import { useState } from 'react';
+import { FormType } from '../../../models/form';
+
+export function Login({
+    data,
+    handleUpdate,
+}: {
+    data: FormType;
+    handleUpdate: (data: FormType) => void;
+}) {
+    const initialFormData: FormType = data;
+    const [formData, setFormData] = useState(initialFormData);
+
+    const handleBtnSubmit = () => {
+        formData.step3 = true;
+        setFormData({ ...formData });
+        handleUpdate(formData);
+    };
+
     return (
         <>
+            <h2>Login</h2>
             <div>
                 <label htmlFor="userName">Username</label>
                 <input
@@ -22,7 +41,9 @@ export function Login() {
                 />
             </div>
             <div>
-                <button type="submit">Login</button>
+                <button type="submit" onClick={handleBtnSubmit}>
+                    Login
+                </button>
             </div>
         </>
     );
