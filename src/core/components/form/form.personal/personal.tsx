@@ -1,6 +1,62 @@
-export function Personal() {
+import { SyntheticEvent, useState } from 'react';
+import { FormType } from '../../../models/form';
+
+export function Personal({
+    data,
+    handleUpdate,
+}: {
+    data: FormType;
+    handleUpdate: (data: FormType) => void;
+}) {
+    const initialFormData: FormType = data;
+
+    const [formData, setFormData] = useState(initialFormData);
+
+    const handleInput = (event: SyntheticEvent) => {
+        const element = event.target as HTMLFormElement;
+        setFormData({ ...formData, [element.name]: element.value });
+    };
+
+    const handleChange = () => {
+        formData.isChecked = !formData.isChecked;
+        setFormData({ ...formData });
+        handleUpdate(formData);
+    };
+
+    const handleGenderChange = (event: SyntheticEvent) => {
+        const element = event.target as HTMLFormElement;
+        formData.gender = element.id;
+        setFormData({ ...formData });
+        handleUpdate(formData);
+    };
+
+    const calcAgeUser = () => {
+        const birthUser = formData.birthDate;
+        const currentDate = new Date();
+        const yearBirthUser = birthUser.split('-');
+        const ageUser = currentDate.getFullYear() - Number(yearBirthUser[0]);
+        if (formData.birthDate !== '') {
+            return `Age: ${ageUser} years old`;
+        }
+    };
+
+    const handleBtnSubmit = () => {
+        if (
+            formData.userName !== '' &&
+            formData.lastName !== '' &&
+            formData.birthDate !== '' &&
+            formData.gender !== '' &&
+            formData.email !== ''
+        ) {
+            formData.step1 = true;
+            setFormData({ ...formData });
+            handleUpdate(formData);
+        }
+    };
+
     return (
         <>
+            <h2>User Data</h2>
             <div>
                 <label htmlFor="userName">Name</label>
                 <input
@@ -8,6 +64,8 @@ export function Personal() {
                     name="userName"
                     id="userName"
                     placeholder="Introduce your name"
+                    value={formData.userName}
+                    onInput={handleInput}
                     required
                 />
             </div>
@@ -18,31 +76,43 @@ export function Personal() {
                     name="lastName"
                     id="lastName"
                     placeholder="Introduce your last name"
+                    value={formData.lastName}
+                    onInput={handleInput}
                     required
                 />
             </div>
             <div>
-                <label htmlFor="BirthDate">BirthDate</label>
+                <label htmlFor="birthDate">BirthDate</label>
                 <input
                     type="date"
-                    name="BirthDate"
-                    id="BirthDate"
+                    name="birthDate"
+                    id="birthDate"
                     placeholder="Introduce your birthdate"
+                    value={formData.birthDate}
+                    onInput={handleInput}
                     required
                 />
                 <div>
-                    <p>
-                        Age: <span>38</span> years old
-                    </p>
+                    <p>{calcAgeUser()}</p>
                 </div>
             </div>
-            <div>
+            <div className="inputs-group">
                 <p>Gender</p>
                 <div>
+                    <input
+                        type="radio"
+                        name="gender"
+                        id="female"
+                        onChange={handleGenderChange}
+                    />
                     <label htmlFor="female">Female</label>
-                    <input type="radio" name="gender" id="female" />
+                    <input
+                        type="radio"
+                        name="gender"
+                        id="male"
+                        onChange={handleGenderChange}
+                    />
                     <label htmlFor="male">Male</label>
-                    <input type="radio" name="gender" id="male" />
                 </div>
             </div>
             <div>
@@ -52,17 +122,25 @@ export function Personal() {
                     name="email"
                     id="email"
                     placeholder="Introduce your email"
+                    value={formData.email}
+                    onInput={handleInput}
                     required
                 />
             </div>
-            <div>
-                <input type="checkbox" />
+            <div className="input-side">
+                <input
+                    type="checkbox"
+                    checked={formData.isChecked}
+                    onChange={handleChange}
+                />
                 <label htmlFor="checkNewsletter">
                     Do you want to receive information from our newsletter?
                 </label>
             </div>
             <div>
-                <button type="submit">Guardar</button>
+                <button type="submit" onClick={handleBtnSubmit}>
+                    Save
+                </button>
             </div>
         </>
     );
