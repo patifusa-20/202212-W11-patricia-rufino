@@ -1,4 +1,4 @@
-import { SyntheticEvent, useState } from 'react';
+import { useState } from 'react';
 import { FormType } from '../../../models/form';
 import { Pagination } from '../pagination/pagination';
 
@@ -38,7 +38,6 @@ export function Confirmation({
                 <Pagination
                     data={formData}
                     handleUpdate={handleUpdate}
-                    step={'3'}
                 ></Pagination>
                 <button type="submit" onClick={handleBtnSubmit}>
                     Confirm
