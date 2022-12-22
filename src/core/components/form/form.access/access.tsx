@@ -94,7 +94,6 @@ export function Access({
                 <Pagination
                     data={formData}
                     handleUpdate={handleUpdate}
-                    step={'2'}
                 ></Pagination>
                 <button type="submit" onClick={handleBtnSubmit}>
                     Save

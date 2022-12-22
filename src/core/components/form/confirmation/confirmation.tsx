@@ -38,7 +38,6 @@ export function Confirmation({
                 <Pagination
                     data={formData}
                     handleUpdate={handleUpdate}
-                    step={'3'}
                 ></Pagination>
                 <button type="submit" onClick={handleBtnSubmit}>
                     Confirm
