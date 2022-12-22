@@ -17,6 +17,13 @@ export function Confirmation({
         setFormData({ ...formData });
         handleUpdate(formData);
     };
+
+    const handleBtnPrev = () => {
+        formData.step2 = false;
+        setFormData({ ...formData });
+        handleUpdate(formData);
+    };
+
     return (
         <>
             <h2>Confirmation</h2>
@@ -35,10 +42,7 @@ export function Confirmation({
                 <li>{data.accountType}</li>
             </ul>
             <div>
-                <Pagination
-                    data={formData}
-                    handleUpdate={handleUpdate}
-                ></Pagination>
+                <Pagination handleBtnPrev={handleBtnPrev}></Pagination>
                 <button type="submit" onClick={handleBtnSubmit}>
                     Confirm
                 </button>

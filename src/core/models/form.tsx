@@ -13,4 +13,7 @@ export type FormType = {
     step2: boolean;
     step3: boolean;
     step4: boolean;
+    dataError: boolean;
+    userLogin: string;
+    passLogin: string;
 };

@@ -79,3 +79,10 @@ button[type='button'] {
 .inputs-group label:first-of-type {
     padding-right: 1rem;
 }
+
+.data-error {
+    font-size: 0.8rem;
+    position: relative;
+    top: -15px;
+    color: #c60d0d;
+}

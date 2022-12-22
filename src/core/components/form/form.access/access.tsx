@@ -18,6 +18,17 @@ export function Access({
         handleUpdate(formData);
     };
 
+    const handlePasswordInput = (event: SyntheticEvent) => {
+        const element = event.target as HTMLFormElement;
+        if (element.value !== formData.password) {
+            formData.dataError = true;
+        } else {
+            formData.dataError = false;
+        }
+        setFormData({ ...formData, [element.name]: element.value });
+        handleUpdate(formData);
+    };
+
     const handleAccountTypeChange = (event: SyntheticEvent) => {
         const element = event.target as HTMLFormElement;
         formData.accountType = element.value;
@@ -29,13 +40,19 @@ export function Access({
         if (
             formData.userNameAccess !== '' &&
             formData.password !== '' &&
-            formData.repeatPass !== '' &&
+            formData.repeatPass === formData.password &&
             formData.accountType !== ''
         ) {
             formData.step2 = true;
             setFormData({ ...formData });
             handleUpdate(formData);
         }
+    };
+
+    const handleBtnPrev = () => {
+        formData.step1 = false;
+        setFormData({ ...formData });
+        handleUpdate(formData);
     };
 
     return (
@@ -73,9 +90,14 @@ export function Access({
                     id="repeatPass"
                     placeholder="Introduce your password again"
                     value={formData.repeatPass}
-                    onInput={handleInput}
+                    onInput={handlePasswordInput}
                     required
                 />
+                {formData.dataError ? (
+                    <span className="data-error">Incorrect data</span>
+                ) : (
+                    ''
+                )}
             </div>
             <div>
                 <label htmlFor="account-type">Account type</label>
@@ -91,10 +113,7 @@ export function Access({
                 </select>
             </div>
             <div>
-                <Pagination
-                    data={formData}
-                    handleUpdate={handleUpdate}
-                ></Pagination>
+                <Pagination handleBtnPrev={handleBtnPrev}></Pagination>
                 <button type="submit" onClick={handleBtnSubmit}>
                     Save
                 </button>
