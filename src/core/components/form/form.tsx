@@ -23,6 +23,9 @@ export function Form() {
         step2: false,
         step3: false,
         step4: false,
+        dataError: false,
+        userLogin: '',
+        passLogin: '',
     };
 
     const [userData, setUserData] = useState(initialState);
@@ -35,7 +38,7 @@ export function Form() {
         setUserData({ ...userData, ...data });
     };
 
-    //PERSISTENCIA usando el local storage. Cada vez q alguien cambie las tareas en el array, sálvalas en el local storage
+    //PERSISTENCIA
     useEffect(() => {
         saveUserData(userData);
     }, [userData]);
@@ -72,6 +75,7 @@ export function Form() {
                 ) : (
                     ''
                 )}
+                {userData.step4 ? <h3>Hello {userData.userName}!</h3> : ''}
             </form>
         </section>
     );
