@@ -14,8 +14,6 @@ export function Pagination({
     const [formData, setFormData] = useState(initialFormData);
 
     const handleBtnSubmit = () => {
-        const prevStep = 'step' + step;
-        //formData[prevStep] = false;
         setFormData({ ...formData });
         handleUpdate(formData);
     };
