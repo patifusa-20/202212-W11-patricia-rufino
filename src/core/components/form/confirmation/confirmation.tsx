@@ -1,4 +1,4 @@
-import { SyntheticEvent, useState } from 'react';
+import { useState } from 'react';
 import { FormType } from '../../../models/form';
 import { Pagination } from '../pagination/pagination';
 
